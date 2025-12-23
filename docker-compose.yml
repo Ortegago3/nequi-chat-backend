@@ -1,0 +1,16 @@
+# Levanta el API con variables de entorno y volumen para SQLite.
+version: "3.9"
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      ENV: dev
+      API_KEY: ${API_KEY:-dev-key}
+      RATE_LIMIT_PER_MINUTE: ${RATE_LIMIT_PER_MINUTE:-60}
+      DATABASE_URL: "sqlite:////data/messages.db"
+      BANNED_WORDS: ${BANNED_WORDS:-spam,scam,offensive}
+      REJECT_ON_BANNED: ${REJECT_ON_BANNED:-true}
+    volumes:
+      - ./data:/data
